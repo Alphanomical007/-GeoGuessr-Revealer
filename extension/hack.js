@@ -823,40 +823,46 @@
             setTimeout(() => t.classList.remove("v"), 2200);
         }
         function copyCoords() {
-            if (!S.lat) return showToast("⚠️ No coordinates yet!");
             try {
+                if (!S.lat) return showToast("⚠️ No coordinates yet!");
                 navigator.clipboard.writeText(`${S.lat.toFixed(6)}, ${S.lng.toFixed(6)}`)
                     .then(() => showToast(`✅ Copied: ${S.lat.toFixed(6)}, ${S.lng.toFixed(6)}`))
                     .catch(() => showToast("⚠️ Clipboard blocked"));
             } catch (e) { showToast("⚠️ Clipboard unavailable"); }
         }
         function copyAll() {
-            if (!S.lat) return showToast("⚠️ No coordinates yet!");
-            const lines = [
-                `📍 ${S.lat.toFixed(6)}, ${S.lng.toFixed(6)}`,
-                S.country ? `🏳️ ${S.country}` : null, S.region ? `📍 ${S.region}` : null,
-                S.city ? `🏙️ ${S.city}` : null, S.road ? `🛣️ ${S.road}` : null,
-                `🗺️ https://www.google.com/maps/search/?api=1&query=${S.lat},${S.lng}`,
-            ].filter(Boolean).join("\n");
             try {
+                if (!S.lat) return showToast("⚠️ No coordinates yet!");
+                const lines = [
+                    `📍 ${S.lat.toFixed(6)}, ${S.lng.toFixed(6)}`,
+                    S.country ? `🏳️ ${S.country}` : null, S.region ? `📍 ${S.region}` : null,
+                    S.city ? `🏙️ ${S.city}` : null, S.road ? `🛣️ ${S.road}` : null,
+                    `🗺️ https://www.google.com/maps/search/?api=1&query=${S.lat},${S.lng}`,
+                ].filter(Boolean).join("\n");
                 navigator.clipboard.writeText(lines)
                     .then(() => showToast("✅ All info copied!"))
                     .catch(() => showToast("⚠️ Clipboard blocked"));
             } catch (e) { showToast("⚠️ Clipboard unavailable"); }
         }
         function openMaps() {
-            if (!S.lat) return showToast("⚠️ No coordinates yet!");
-            window.open(`https://www.google.com/maps/search/?api=1&query=${S.lat},${S.lng}`, "_blank");
+            try {
+                if (!S.lat) return showToast("⚠️ No coordinates yet!");
+                window.open(`https://www.google.com/maps/search/?api=1&query=${S.lat},${S.lng}`, "_blank");
+            } catch (e) { }
         }
         function togglePanel() {
-            S.minimized = !S.minimized;
-            panel.classList.toggle("gr-hidden", S.minimized);
-            fab.classList.toggle("v", S.minimized);
+            try {
+                S.minimized = !S.minimized;
+                panel.classList.toggle("gr-hidden", S.minimized);
+                fab.classList.toggle("v", S.minimized);
+            } catch (e) { }
         }
 
         function openStreetView() {
-            if (!S.lat) return showToast("⚠️ No coordinates yet!");
-            window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${S.lat},${S.lng}`, "_blank");
+            try {
+                if (!S.lat) return showToast("⚠️ No coordinates yet!");
+                window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${S.lat},${S.lng}`, "_blank");
+            } catch (e) { }
         }
 
         $("gr-cpb").onclick = copyCoords;
@@ -864,31 +870,35 @@
         $("gr-asv").onclick = openStreetView;
         $("gr-acopy").onclick = copyAll;
         $("gr-aref").onclick = () => {
-            S.lastKey = ""; window.__GH.net = null; window.__GH.pano = null;
-            S.found = false; S.geocodeFailed = false;
-            S.country = ""; S.city = ""; S.region = ""; S.road = "";
-            locG.style.display = "none"; camR.style.display = "none";
-            try { mapFrame.removeAttribute("src"); mapFrame.srcdoc = ""; } catch (e) { }
-            mapFrame.style.display = "none";
-            mapPh.style.display = "flex"; mapLk.style.display = "none"; mapZb.style.display = "none";
-            mapBox.classList.add("sm"); mapBox.classList.remove("lg"); mapExpanded = false; mapZb.textContent = "⛶";
-            coordsEl.textContent = "Refreshing…"; dot.className = "gr-dot s";
-            msg.textContent = "Re-scanning…"; mtag.style.display = "none";
-            $("gr-prog").style.width = "0%";
-            showToast("🔄 Refreshed");
+            try {
+                S.lastKey = ""; window.__GH.net = null; window.__GH.pano = null;
+                S.found = false; S.geocodeFailed = false;
+                S.country = ""; S.city = ""; S.region = ""; S.road = "";
+                locG.style.display = "none"; camR.style.display = "none";
+                try { mapFrame.removeAttribute("src"); mapFrame.srcdoc = ""; } catch (e) { }
+                mapFrame.style.display = "none";
+                mapPh.style.display = "flex"; mapLk.style.display = "none"; mapZb.style.display = "none";
+                mapBox.classList.add("sm"); mapBox.classList.remove("lg"); mapExpanded = false; mapZb.textContent = "⛶";
+                coordsEl.textContent = "Refreshing…"; dot.className = "gr-dot s";
+                msg.textContent = "Re-scanning…"; mtag.style.display = "none";
+                $("gr-prog").style.width = "0%";
+                showToast("🔄 Refreshed");
+            } catch (e) { }
         };
         $("gr-min").onclick = togglePanel;
-        $("gr-cls").onclick = () => { clearInterval(loop); root.remove(); toastEl.remove(); css.remove(); document.removeEventListener("keydown", onKey); };
+        $("gr-cls").onclick = () => { try { clearInterval(loop); root.remove(); toastEl.remove(); css.remove(); document.removeEventListener("keydown", onKey); } catch (e) { } };
         fab.onclick = togglePanel;
 
         function onKey(e) {
-            if (["INPUT", "TEXTAREA"].includes(e.target.tagName) || e.target.isContentEditable) return;
-            switch (e.key.toLowerCase()) {
-                case "g": togglePanel(); break;
-                case "c": copyCoords(); break;
-                case "m": openMaps(); break;
-                case "r": $("gr-aref").click(); break;
-            }
+            try {
+                if (["INPUT", "TEXTAREA"].includes(e.target.tagName) || e.target.isContentEditable) return;
+                switch (e.key.toLowerCase()) {
+                    case "g": togglePanel(); break;
+                    case "c": copyCoords(); break;
+                    case "m": openMaps(); break;
+                    case "r": $("gr-aref").click(); break;
+                }
+            } catch (err) { }
         }
         document.addEventListener("keydown", onKey);
 
@@ -899,29 +909,35 @@
         document.addEventListener("mouseup", () => { dr.a = false; });
 
         function updateLocationUI() {
-            const cntryEl = $("gr-cntry"), cityEl = $("gr-city"), rgnEl = $("gr-rgn"), roadEl = $("gr-road"), flagEl = $("gr-flag");
-            if (!cntryEl) return;
-            locG.style.display = "grid";
-            if (S.country) {
-                flagEl.textContent = S.geocodeFailed ? "❓" : ccToFlag(S.countryCode);
-                cntryEl.textContent = S.country;
-                cntryEl.classList.remove("loading"); cntryEl.classList.add("gc");
-                cityEl.textContent = S.city || "—"; cityEl.classList.remove("loading");
-                rgnEl.textContent = S.region || "—"; rgnEl.classList.remove("loading");
-                roadEl.textContent = S.road || "—"; roadEl.classList.remove("loading");
-            }
+            try {
+                const cntryEl = $("gr-cntry"), cityEl = $("gr-city"), rgnEl = $("gr-rgn"), roadEl = $("gr-road"), flagEl = $("gr-flag");
+                if (!cntryEl) return;
+                if (locG) locG.style.display = "grid";
+                if (S.country) {
+                    if (flagEl) flagEl.textContent = S.geocodeFailed ? "❓" : ccToFlag(S.countryCode);
+                    if (cntryEl) {
+                        cntryEl.textContent = S.country;
+                        cntryEl.classList.remove("loading"); cntryEl.classList.add("gc");
+                    }
+                    if (cityEl) { cityEl.textContent = S.city || "—"; cityEl.classList.remove("loading"); }
+                    if (rgnEl) { rgnEl.textContent = S.region || "—"; rgnEl.classList.remove("loading"); }
+                    if (roadEl) { roadEl.textContent = S.road || "—"; roadEl.classList.remove("loading"); }
+                }
+            } catch (e) { }
         }
         // Expose for geocode callback
         window.__grUpdateLocUI = updateLocationUI;
 
         function updateHistory() {
-            if (!S.roundHistory.length) { histBox.style.display = "none"; return; }
-            histBox.style.display = "block";
-            histLs.innerHTML = S.roundHistory.slice().reverse().map(r => `
-        <div class="gr-hi"><div class="gr-hn">${r.num}</div><div class="gr-hf">${r.flag}</div>
-        <div class="gr-hna">${r.country || (r.failed ? "Unknown location" : "Locating…")}</div>
-        <div class="gr-hco">${r.lat.toFixed(4)}, ${r.lng.toFixed(4)}</div></div>
-      `).join("");
+            try {
+                if (!S.roundHistory.length) { if (histBox) histBox.style.display = "none"; return; }
+                if (histBox) histBox.style.display = "block";
+                if (histLs) histLs.innerHTML = S.roundHistory.slice().reverse().map(r => `
+            <div class="gr-hi"><div class="gr-hn">${r.num}</div><div class="gr-hf">${r.flag}</div>
+            <div class="gr-hna">${r.country || (r.failed ? "Unknown location" : "Locating…")}</div>
+            <div class="gr-hco">${r.lat.toFixed(4)}, ${r.lng.toFixed(4)}</div></div>
+          `).join("");
+            } catch (e) { }
         }
 
         function mainLoop() {
