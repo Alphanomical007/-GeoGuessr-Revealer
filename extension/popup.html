@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGuessr Revealer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 320px;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(165deg, #0a0a1c, #12122d);
+            color: #e2e8f0;
+            padding: 0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #a855f7);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 255, 255, 0.03) 20px, rgba(255, 255, 255, 0.03) 40px);
+        }
+
+        .logo {
+            font-size: 36px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .version {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+            position: relative;
+        }
+
+        .body {
+            padding: 20px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+            flex-shrink: 0;
+        }
+
+        .status-text {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-sub {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .info-num {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .info-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .shortcuts {
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .shortcuts-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .shortcut-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .shortcut-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .kbd {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .shortcut-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">🌍</div>
+        <div class="title">GeoGuessr Revealer</div>
+        <div class="version">v3.1 · Edge Extension</div>
+    </div>
+
+    <div class="body">
+        <div class="status-card">
+            <div class="status-dot"></div>
+            <div>
+                <div class="status-text">Extension Active</div>
+                <div class="status-sub">Auto-injects on geoguessr.com</div>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-num">8</div>
+                <div class="info-label">Detection Methods</div>
+            </div>
+            <div class="info-item">
+                <div class="info-num">99%</div>
+                <div class="info-label">Max Accuracy</div>
+            </div>
+        </div>
+
+        <div class="shortcuts">
+            <div class="shortcuts-title">⌨️ Keyboard Shortcuts</div>
+            <div class="shortcut-row"><span class="kbd">G</span><span class="shortcut-desc">Toggle overlay panel</span>
+            </div>
+            <div class="shortcut-row"><span class="kbd">C</span><span class="shortcut-desc">Copy coordinates</span>
+            </div>
+            <div class="shortcut-row"><span class="kbd">M</span><span class="shortcut-desc">Open in Google Maps</span>
+            </div>
+            <div class="shortcut-row"><span class="kbd">R</span><span class="shortcut-desc">Refresh / re-scan</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Just open GeoGuessr — the overlay appears automatically!
+    </div>
+</body>
+
+</html>
