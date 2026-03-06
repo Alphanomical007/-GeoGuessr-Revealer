@@ -1,5 +1,5 @@
 // ============================================================
-//  🌍 GeoGuessr Revealer v3.2 — Edge Extension Edition
+//  🌍 GeoGuessr Revealer v3.2 — Extension Edition
 //  Auto-injected by the extension. No console pasting needed!
 //  Press [G] to toggle the overlay panel.
 // ============================================================

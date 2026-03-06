@@ -1,6 +1,6 @@
-# 🌍 GeoGuessr Revealer — Edge Extension
+# 🌍 GeoGuessr Revealer
 
-An automatic overlay extension for Microsoft Edge that reveals the exact location during GeoGuessr games. No console pasting, no bookmarklets — just install and play.
+An automatic overlay extension for Chrome, Edge, Brave, and other Chromium browsers that reveals the exact location during GeoGuessr games. No console pasting, no bookmarklets — just install and play.
 
 ![Edge Extension](https://img.shields.io/badge/Platform-Microsoft_Edge-0078D7?style=flat-square&logo=microsoftedge&logoColor=white)
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-4f46e5?style=flat-square)
@@ -10,8 +10,8 @@ An automatic overlay extension for Microsoft Edge that reveals the exact locatio
 
 ## ⚡ Quick Install
 
-1. Open Edge and go to **`edge://extensions/`**
-2. Enable **Developer mode** (toggle at bottom-left)
+1. Open Chrome (`chrome://extensions/`) or Edge (`edge://extensions/`)
+2. Enable **Developer mode** (toggle at top-right for Chrome, bottom-left for Edge)
 3. Click **Load unpacked**
 4. Select the **`extension/`** folder from this project
 5. Done — visit [geoguessr.com](https://www.geoguessr.com) and the overlay appears automatically
@@ -84,7 +84,7 @@ The extension injects `hack.js` into every GeoGuessr page at `document_start` vi
 ## ⚠️ Notes
 
 - This is for **educational and entertainment purposes only**
-- Works with Edge (Chromium-based) — also compatible with Chrome, Brave, etc.
+- Works on Chrome, Edge, Brave, and most other Chromium-based browsers
 - Reverse geocoding uses the free [OpenStreetMap Nominatim API](https://nominatim.org/)
 - No data is collected or sent to any third-party servers beyond Nominatim
 
@@ -92,4 +92,4 @@ The extension injects `hack.js` into every GeoGuessr page at `document_start` vi
 
 ## 🔄 Updating
 
-After editing any files in `extension/`, go to `edge://extensions/` and click the **refresh** icon on the extension card.
+After editing any files in `extension/`, go to `chrome://extensions/` or `edge://extensions/` and click the **refresh** icon on the extension card.

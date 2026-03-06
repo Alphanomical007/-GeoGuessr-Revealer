@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "GeoGuessr Revealer",
     "version": "3.0.0",
-    "description": "Automatically reveals location coordinates, country, city, and more while playing GeoGuessr",
+    "description": "Automatically reveals location coordinates, country, city, and more while playing GeoGuessr (Chrome, Edge, Brave)",
     "permissions": [
         "activeTab",
         "scripting"
